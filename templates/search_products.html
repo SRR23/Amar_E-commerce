@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Search Products {% endblock title %}
+
+{% block content %}
+
+<!-- Page Add Section Begin -->
+ {% if category_products.count %}
+<section class="page-add">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="page-breadcrumb">
+                    <h3>{{category_products.count}} Results Found for {{key}}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+<!-- Page Add Section End -->
+
+<!-- Categories Page Section Begin -->
+{% if category_products.count %}
+<section class="categories-page spad">
+    <div class="container">
+        
+        <div class="row">
+            {% for ctg in category_products %}
+            <div class="col-lg-3 col-md-6">
+                <div class="single-product-item">
+                    <a href="{% url 'Product_details' ctg.slug%}">
+                        <figure>
+                            <img style="height:200px;" src="{{ctg.thumbnail.url}}" alt="">
+                        </figure>
+                    </a>
+                    <div class="product-text">
+                        <a class="text-decoration-none" href="{% url 'Product_details' ctg.slug%}">
+                            <h6>{{ctg.title}}</h6>
+                        </a>
+                        <p>${{ctg.price}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+    </div>
+</section>
+{% else %}
+<div class="row justify-content-center align-items-center">
+    <div class="col-md-5">
+        <img class="img-fluid" src="{% static 'img/No_products_Found.png' %}" 
+        style="width: 440px;" alt="no-result">
+    </div>
+</div>
+{% endif %}
+<!-- Categories Page Section End -->
+
+
+{% endblock content %}
